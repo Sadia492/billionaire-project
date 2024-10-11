@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billionaires Diary</title>
+
+    <!-- Font Awesome CDN -->
+    <script
+      src="https://kit.fontawesome.com/83ad900154.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Tailwind and daisyUI CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.12/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,400;1,600;1,700;1,800;1,900&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="overflow-x-hidden">
+    <section id="main-section" class="bg-slate-100">
+      <div class="w-full mx-auto flex flex-col lg:flex-row py-4 rounded-lg">
+        <!-- Side bar  -->
+        <div class="lg:w-3/12 bg-[#0E1B34] rounded-l-lg p-6 text-center">
+          <h2 class="text-2xl text-slate-400 font-bold">BILLIONAIRE</h2>
+          <h2 class="text-xl text-slate-400 uppercase tracking-widest">
+            Diary
+          </h2>
+
+          <div class="mt-7 text-[#0E1B34]">
+            <button
+              onclick="loadUser()"
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Add a user</span>
+              <span class="text-xs font-normal">(Randomly)</span>
+            </button>
+            <button
+              onclick="doubleMoney()"
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Double Money</span>
+            </button>
+            <button
+              id="sortByRankBtn"
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Sort By Rank </span>
+              <span class="text-xs font-normal">(Decending)</span>
+            </button>
+            <button
+              onclick="calculateTotal()"
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Calculate Entire Wealth</span>
+            </button>
+
+            <div class="flex justify-center my-5">
+              <img src="images/icons/divider.png" alt="" class="w-48" />
+            </div>
+
+            <button
+              onclick="showBillionaire()"
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Show All Billionaires</span>
+            </button>
+            <button
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Richest by industry </span>
+              <span class="text-xs font-normal">(Technology)</span>
+            </button>
+            <button
+              class="bg-slate-400 py-2 mb-2 w-full flex flex-col mx-auto justify-between items-center hover:bg-white"
+            >
+              <span class="text-md font-semibold">Richest by states</span>
+              <span class="text-xs font-normal">(Texas)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Content  -->
+        <div
+          class="lg:w-9/12 bg-slate-300 rounded-r-lg border-2 border-[#0E1B34]"
+        >
+          <div class="bg-[#0E1B34] rounded-r-lg">
+            <div class="flex justify-between p-4">
+              <label class="input focus:border-none flex items-center gap-2">
+                <input type="text" class="grow" placeholder="Search" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="h-4 w-4 opacity-70"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </label>
+              <div class="">
+                <img src="images/logo/logo1.png" alt="" class="w-12 h-12" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Table  -->
+          <div class="p-6">
+            <h2 class="text-lg text-[#0E1B34]">Hello Users</h2>
+
+            <div class="table">
+              <div class="overflow-x-hidden">
+                <div>
+                  <table class="table table-zebra">
+                    <!-- head -->
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>View</th>
+                        <th>Citizenship</th>
+                        <th>Industry</th>
+                        <th>Rank</th>
+                        <th>Wealth</th>
+                      </tr>
+                    </thead>
+                    <table class="table table-zebra">
+                      <tbody id="table-container"></tbody>
+                    </table>
+                  </table>
+                  <div id="spinner" class="text-center hidden">
+                    <span class="loading loading-dots loading-lg"></span>
+                  </div>
+                </div>
+
+                <div class="flex justify-between mt-10 p-4 border-t">
+                  <h2 class="font-bold">Total</h2>
+                  <h2 id="total-wealth" class="mr-10 font-bold">$--</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="richest-by-tech" class="hidden">
+      <div class="flex justify-between items-end w-11/12 mx-auto">
+        <button onclick="reverseTask()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div>
+          <h2 class="text-3xl font-bold text-center">Richest By Industry</h2>
+          <h2 class="text-center text-2xl">(Technology)</h2>
+        </div>
+        <div>
+          <img class="w-1/2" src="images/logo/logo1.png" alt="" />
+        </div>
+      </div>
+
+      <div
+        id="card-container"
+        class="grid gap-6 grid-cols-3 w-11/12 mx-auto"
+      ></div>
+    </section>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
